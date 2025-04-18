@@ -12,6 +12,8 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const SetBudget = ({color, currentMonth, currentYear, availableMonths, years, current, showBudget}) => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_BACKEND_URL : process.env.NEXT_PUBLIC_DEVELOPMENT_BACKEND_URL;
+
     const [isEditable, setIsEditable] = useState(false)
     const [budgetData, setBudgetData] = useState({
         budget: 0,
@@ -31,7 +33,7 @@ const SetBudget = ({color, currentMonth, currentYear, availableMonths, years, cu
     useEffect(() => {
       const getBudget = async () => {
         try {
-            const response = await axios.get(`/api/budgets?month=${availableMonths.indexOf(budgetData.month) + 1 || availableMonths.indexOf(currentMonth) + 1}&year=${budgetData.year || currentYear}&category=${current}`)
+            const response = await axios.get(`${BACKEND_URL}/api/budgets?month=${availableMonths.indexOf(budgetData.month) + 1 || availableMonths.indexOf(currentMonth) + 1}&year=${budgetData.year || currentYear}&category=${current}`)
 
             if (response.status === 200){
                 const amount = response.data[0]?.amount ?? 0;
@@ -47,7 +49,7 @@ const SetBudget = ({color, currentMonth, currentYear, availableMonths, years, cu
 
     const addBudget = async () => {
         try {
-            const response = await axios.patch(`/api/budgets`, {category: current, amount: budgetData.budget, month: availableMonths.indexOf(budgetData.month) + 1, year: budgetData.year})
+            const response = await axios.patch(`${BACKEND_URL}/api/budgets`, {category: current, amount: budgetData.budget, month: availableMonths.indexOf(budgetData.month) + 1, year: budgetData.year})
             
             if(response.status === 201){
                 toast("Budget has been created")

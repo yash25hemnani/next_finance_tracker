@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadTransactionArray } from "@/store/transactionSlice";
 
 export default function Home() {
+  const BACKEND_URL = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_BACKEND_URL : process.env.NEXT_PUBLIC_DEVELOPMENT_BACKEND_URL;
+
   const dispatch = useDispatch()
   const transactionData = useSelector(state => state.transactions.transactionData)
   const [data, setData] = useState([])
@@ -17,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     const getAllTransactions = async () => {
       try {
-          const response = await axios.get("/api/transactions")
+          const response = await axios.get(`${BACKEND_URL}/api/transactions`)
 
           if (response.status === 200) {
             console.log(response.data);

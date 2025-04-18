@@ -58,6 +58,8 @@ const chartConfig = {
 
 
 const CurrentMonthChart = ({currentMonth, currentYear, availableMonths, years, current}) => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_BACKEND_URL : process.env.NEXT_PUBLIC_DEVELOPMENT_BACKEND_URL;
+
     const [chartData, setChartData] = useState([])
 
     const [dataQuery, setDataQuery] = useState({
@@ -76,7 +78,7 @@ const CurrentMonthChart = ({currentMonth, currentYear, availableMonths, years, c
     useEffect(() => {
         const getCurrentMonthData = async () => {
             try {
-                const response = await axios.get(`/api/category-summary/current-month?month=${availableMonths.indexOf(dataQuery.month) + 1 || availableMonths.indexOf(currentMonth) + 1}&year=${dataQuery.year || currentYear}`)
+                const response = await axios.get(`${BACKEND_URL}/api/category-summary/current-month?month=${availableMonths.indexOf(dataQuery.month) + 1 || availableMonths.indexOf(currentMonth) + 1}&year=${dataQuery.year || currentYear}`)
                 if (response.status === 200) {
                     console.log(response.data);
                     setChartData(response.data)

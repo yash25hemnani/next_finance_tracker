@@ -37,6 +37,8 @@ import { addNewTransaction } from "@/store/transactionSlice";
 const selectValues = ['Food', 'Transport', 'Utilities', 'Entertainment', 'Healthcare', 'Shopping', 'Education', 'Savings', 'Other']
 
 const AddTransactions = ({isEditDialog = false}) => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_BACKEND_URL : process.env.NEXT_PUBLIC_DEVELOPMENT_BACKEND_URL;
+    
     const dispatch = useDispatch()
     const [date, setDate] = useState('')
     const [amount, setAmount] = useState(0)
@@ -66,7 +68,7 @@ const AddTransactions = ({isEditDialog = false}) => {
             console.log(date, amount, category);
             const color = categoryColors[category] || '#000000';
             console.log(color);
-            const response = await axios.post("/api/transactions", {
+            const response = await axios.post(`${BACKEND_URL}/api/transactions`, {
                 amount: parseInt(amount), description: 'Something', date, category, color
             })
 

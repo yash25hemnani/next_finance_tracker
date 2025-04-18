@@ -11,6 +11,8 @@ import { loadTransactionArray } from "@/store/transactionSlice";
 
 
 const TransactionTable = ({ isDetailedView }) => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_BACKEND_URL : process.env.NEXT_PUBLIC_DEVELOPMENT_BACKEND_URL;
+
     const dispatch = useDispatch()
 
     const router = useRouter();
@@ -42,7 +44,7 @@ const TransactionTable = ({ isDetailedView }) => {
     const handleDelete = async (toDelete) => {
         try {
             for (const id of toDelete) {
-                const response = await axios.delete(`/api/transactions/${id}`);
+                const response = await axios.delete(`${BACKEND_URL}/api/transactions/${id}`);
 
                 if (response.status === 200) {
                     const temp = transactions.filter(element => element._id !== id);

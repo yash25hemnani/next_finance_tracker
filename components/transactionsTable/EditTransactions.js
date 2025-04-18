@@ -39,6 +39,8 @@ const selectValues = ['Food', 'Transport', 'Utilities', 'Entertainment', 'Health
 
 
 const EditTransactions = ({ open, setOpen, currentId }) => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_BACKEND_URL : process.env.NEXT_PUBLIC_DEVELOPMENT_BACKEND_URL;
+
     const dispatch = useDispatch()
 
     const [transactionData, setTransactionData] = useState({
@@ -80,7 +82,7 @@ const EditTransactions = ({ open, setOpen, currentId }) => {
     const updateData = async (currentId) => {
         try {
             const updateResponse = await axios.patch(
-                `/api/transactions/${currentId}`,
+                `${BACKEND_URL}/api/transactions/${currentId}`,
                 { ...transactionData, _id: currentId }
             );
     

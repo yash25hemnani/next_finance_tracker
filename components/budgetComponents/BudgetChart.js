@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/chart"
 
 const BudgetChart = ({ color, currentMonth, currentYear, availableMonths, years, current, showBudget }) => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? process.env.NEXT_PUBLIC_PRODUCTION_BACKEND_URL : process.env.NEXT_PUBLIC_DEVELOPMENT_BACKEND_URL;
+
     const [chartData, setChartData] = useState([
         { category: "", budget: 0, actual: 0 }
     ]);
@@ -45,7 +47,7 @@ const BudgetChart = ({ color, currentMonth, currentYear, availableMonths, years,
     useEffect(() => {
       const getActualAndBudget = async () => {
         try {
-            const response = await axios.get(`/api/budget-summary?month=${availableMonths.indexOf(dataQuery.month) + 1 || availableMonths.indexOf(currentMonth) + 1}&year=${dataQuery.year || currentYear}&category=${current}`)
+            const response = await axios.get(`${BACKEND_URL}/api/budget-summary?month=${availableMonths.indexOf(dataQuery.month) + 1 || availableMonths.indexOf(currentMonth) + 1}&year=${dataQuery.year || currentYear}&category=${current}`)
 
             if(response.status === 200) {
                 console.log(response.data);
