@@ -37,7 +37,8 @@ const TransactionTable = ({ isDetailedView }) => {
     };
     useEffect(() => {
         console.log(toDelete);
-    }, [toDelete])
+        console.log(transactionData);
+    }, [toDelete, transactionData])
 
     const transactions = useSelector(state => state.transactions.transactionData)
 

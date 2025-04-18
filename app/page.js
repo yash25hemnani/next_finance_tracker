@@ -23,7 +23,7 @@ export default function Home() {
 
           if (response.status === 200) {
             console.log(response.data);
-            // dispatch(loadTransactionArray(response.data));
+            dispatch(loadTransactionArray(response.data));
             setData(response.data)
           }
       } catch (error) {
