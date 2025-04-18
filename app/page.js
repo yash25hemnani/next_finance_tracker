@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     const getAllTransactions = async () => {
       try {
-          const response = await axios.get(`${BACKEND_URL}/api/transactions`, )
+          const response = await axios.get(`${BACKEND_URL}/api/transactions/`, )
 
           if (response.status === 200) {
             console.log(response.data);

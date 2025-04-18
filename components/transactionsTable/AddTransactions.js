@@ -68,7 +68,7 @@ const AddTransactions = ({isEditDialog = false}) => {
             console.log(date, amount, category);
             const color = categoryColors[category] || '#000000';
             console.log(color);
-            const response = await axios.post(`${BACKEND_URL}/api/transactions`, {
+            const response = await axios.post(`${BACKEND_URL}/api/transactions/`, {
                 amount: parseInt(amount), description: 'Something', date, category, color
             })
 

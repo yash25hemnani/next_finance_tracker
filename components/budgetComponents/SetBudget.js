@@ -49,7 +49,7 @@ const SetBudget = ({color, currentMonth, currentYear, availableMonths, years, cu
 
     const addBudget = async () => {
         try {
-            const response = await axios.patch(`${BACKEND_URL}/api/budgets`, {category: current, amount: budgetData.budget, month: availableMonths.indexOf(budgetData.month) + 1, year: budgetData.year})
+            const response = await axios.patch(`${BACKEND_URL}/api/budgets/`, {category: current, amount: budgetData.budget, month: availableMonths.indexOf(budgetData.month) + 1, year: budgetData.year})
             
             if(response.status === 201){
                 toast("Budget has been created")
